@@ -36,7 +36,10 @@ public class BadgeView extends View {
     private Paint mCirclePaint;
     private int mTextPadding = 20;
     private Rect mTextBound = new Rect();
+    private LinearLayout mLayoutTarget;
     private int mGravity = DEFAULT_GRAVITY;
+    private int offsetX = -mTextPadding/2;
+    private int offsetY = -mTextPadding/2;
     public BadgeView(Context context) {
         this(context, null);
     }
@@ -69,7 +72,7 @@ public class BadgeView extends View {
         mCirclePaint = new Paint();
         mCirclePaint.setColor(Color.GREEN);
         mCirclePaint.setStyle(Paint.Style.FILL);
-
+        calculateSize();
     }
 
     private void calculateSize() {
@@ -79,6 +82,10 @@ public class BadgeView extends View {
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(mSize, mSize);
         lp.gravity = mGravity;
         setLayoutParams(lp);
+
+    }
+    private void updateLayoutTarget() {
+        mLayoutTarget.setPadding(0, offsetY + mSize/2, offsetX + mSize/2, 0);
     }
 
     public static BadgeView build(Context context) {
@@ -122,9 +129,9 @@ public class BadgeView extends View {
         parent.removeViewAt(index);
         parent.addView(container, index, tlp);
 
-        if (isParentLayout(target)) {
-            container.addView(target);
-        } else {
+//        if (isParentLayout(target)) {
+//            container.addView(target);
+//        } else {
             LinearLayout llayout = new LinearLayout(getContext());
             container.addView(llayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
@@ -132,9 +139,12 @@ public class BadgeView extends View {
             LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) target.getLayoutParams();
             llp.setMargins(0, 0, 0, 0);
             target.setLayoutParams(llp);
-        }
+
+            mLayoutTarget = llayout;
+//        }
         container.addView(this);
         mContainer = container;
+        updateLayoutTarget();
         return this;
     }
 
@@ -167,7 +177,7 @@ public class BadgeView extends View {
         float center = mSize/2.0F;
 //        canvas.drawColor(Color.RED);
         canvas.drawCircle(mSize/2.0F, mSize/2.0F, mSize/2.0F, mCirclePaint);
-        canvas.drawText(mText, center, center + mTextBound.height()/2.0F , mPaint);
+        canvas.drawText(mText, center, center + mTextBound.height() * 0.5F , mPaint);
     }
 
     @Override

@@ -11,7 +11,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var badge = BadgeView.build(this).bind(button)
-        BadgeView.build(this).bind(layoutFrame)
+        val badge = BadgeView.build(this).bind(button)
+        val badge2 = BadgeView.build(this).bind(layoutFrame)
+
+        button3.setOnClickListener {
+            var txt = editText2.text.toString()
+            badge.setBadgeText(txt)
+            badge2.setBadgeText(txt)
+        }
     }
 }

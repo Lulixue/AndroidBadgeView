@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">AndroidCanvasDemo</string>
+    <string name="button">Button</string>
 </resources>

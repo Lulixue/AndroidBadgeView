@@ -1,30 +1,38 @@
 package com.example.androidcanvasdemo
 
+import android.animation.ObjectAnimator
+import android.animation.ObjectAnimator.ofFloat
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.AlphaAnimation
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
+import androidx.appcompat.app.AppCompatActivity
 import com.example.androidcanvasdemo.BadgeView.BadgeView
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
     private var mBadges = ArrayList<BadgeView>()
     private var mSizeMin = 0
     private var mOffsetXY = 0
+    private val TAG = MainActivity::class.simpleName
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-        mBadges.add(BadgeView.build(this).bind(button))
+//        mBadges.add(BadgeView.build(this).bind(button))
+//        mBadges.add(BadgeView.build(this).bind(mButton))
+//        mBadges.add(BadgeView.build(this).bind(mTxtButton))
+        Log.d(TAG, "main: " + Thread.currentThread().toString())
         mBadges.add(BadgeView.build(this).bind(layoutFrame))
-        mBadges.add(BadgeView.build(this).bind(mButton))
-        mBadges.add(BadgeView.build(this).bind(mTxtButton))
         button3.setOnClickListener {
-            var txt = editText2.text.toString()
+            val txt = editText2.text.toString()
 
+            Log.d(TAG, "thread: " + Thread.currentThread().toString())
             for (badge in mBadges) {
                 badge.setBadgeText(txt)
             }
@@ -163,12 +171,21 @@ class MainActivity : AppCompatActivity() {
     fun onClickVisible(view: View) {
 
         for (badge in mBadges) {
+            val anim = AlphaAnimation(0.0f, 1.0f)
+            anim.interpolator =  (AccelerateDecelerateInterpolator()); //and this
+            anim.duration = (500);
+            badge.startAnimation(anim)
             badge.visibility = View.VISIBLE
         }
     }
     fun onClickInvisible(view: View) {
 
         for (badge in mBadges) {
+
+            val anim = AlphaAnimation(1.0f, 0.0f)
+            anim.interpolator =  (AccelerateDecelerateInterpolator()); //and this
+            anim.duration = (500);
+            badge.startAnimation(anim)
             badge.visibility = View.INVISIBLE
         }
     }

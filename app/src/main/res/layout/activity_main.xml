@@ -55,10 +55,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </FrameLayout>
+    <FrameLayout
+        android:id="@+id/relative2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/relative">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10dp"
+            android:paddingStart="0dp"
+            android:paddingTop="10dp" >
+
+            <FrameLayout
+                android:id="@+id/layoutFrame2"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@android:color/darker_gray"
+                />
+        </LinearLayout>
+        <com.example.androidcanvasdemo.BadgeView.BadgeView
+            android:layout_width="wrap_content"
+            android:layout_gravity="end|top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
 
     <LinearLayout
         app:layout_constraintTop_toBottomOf="@id/relative"
+        android:id="@+id/layoutButtons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
@@ -96,6 +124,16 @@
             app:layout_constraintStart_toEndOf="@id/mButton"
             app:layout_constraintTop_toTopOf="parent"  />
 
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/colorPrimaryDark"
+        app:layout_constraintTop_toBottomOf="@id/layoutButtons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <FrameLayout
             android:id="@+id/layoutFrame"
             android:layout_width="100dp"
@@ -107,7 +145,6 @@
             app:layout_constraintTop_toTopOf="parent"
             />
     </LinearLayout>
-
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/theme_toggle_group"
         android:layout_width="wrap_content"
@@ -170,7 +207,8 @@
         android:id="@+id/visLayout"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
         android:layout_width="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -189,7 +227,7 @@
             android:id="@+id/invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
+            android:layout_marginStart="17dp"
             android:layout_marginEnd="10dp"
             android:onClick="onClickInvisible"
             android:text="@string/invisible"

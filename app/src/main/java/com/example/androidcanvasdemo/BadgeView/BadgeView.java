@@ -1,12 +1,11 @@
 package com.example.androidcanvasdemo.BadgeView;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
@@ -25,6 +23,7 @@ import android.widget.RelativeLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 
 public class BadgeView extends View {
     private static final String TAG = "BadgeView";
@@ -43,12 +42,13 @@ public class BadgeView extends View {
     private Paint mCirclePaint;
     private int mTextPadding = Math.abs(DEFAULT_TEXT_PADDING);
     private Rect mTextBound = new Rect();
-    private LinearLayout mLayoutTarget;
+    private ViewGroup.MarginLayoutParams mMarginLayoutParams;
     private BadgeGravity mGravity = BadgeGravity.EndTop;
     private int mOffsetX = DEFAULT_OFFSET_X_PX;
     private int mOffsetY = DEFAULT_OFFSET_Y_PX;
     private int mTextBgColor = Color.GREEN;
     private int mTextColor = Color.WHITE;
+    static Handler BadgeHandler;
     private Paint.FontMetrics mFontMetrics;
     public BadgeView(Context context) {
         this(context, null);
@@ -83,6 +83,9 @@ public class BadgeView extends View {
     public BadgeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
+        if (BadgeHandler == null) {
+            BadgeHandler = new Handler();
+        }
     }
 
     public BadgeView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
@@ -112,34 +115,35 @@ public class BadgeView extends View {
 
     private void calculateSize() {
         mFontMetrics = mPaint.getFontMetrics();
-        mPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
-        mSize = Math.max(mTextBound.width(), mTextBound.height()) + mTextPadding * 2;
+        mPaint.getTextBounds(mText.isEmpty() ? "1" : mText, 0, mText.length(), mTextBound);
+        mSize = Math.min(mTextBound.width(), mTextBound.height()) + mTextPadding * 2;
 
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(mSize, mSize);
         lp.gravity = mGravity.toGravity();
         setLayoutParams(lp);
     }
     private void updateLayoutTarget() {
-        if (mLayoutTarget != null) {
+        if (mMarginLayoutParams != null) {
             int y = mOffsetY + mSize / 2;
             int x = mOffsetX + mSize / 2;
             x = Math.max(x, 0);
             y = Math.max(y, 0);
             switch (mGravity) {
                 case StartBottom:
-                    mLayoutTarget.setPadding(x, 0, 0, y);
+                    mMarginLayoutParams.setMargins(x, 0, 0, y);
                     break;
                 case StartTop:
-                    mLayoutTarget.setPadding(x, y, 0, 0);
+                    mMarginLayoutParams.setMargins(x, y, 0, 0);
                     break;
                 case EndBottom:
-                    mLayoutTarget.setPadding(0, 0, x, y);
+                    mMarginLayoutParams.setMargins(0, 0, x, y);
                     break;
                 case EndTop:
                 default:
-                    mLayoutTarget.setPadding(0, y, x, 0);
+                    mMarginLayoutParams.setMargins(0, y, x, 0);
                     break;
             }
+            mTarget.setLayoutParams(mMarginLayoutParams);
         }
     }
 
@@ -158,47 +162,55 @@ public class BadgeView extends View {
     public void setBadgeNumber(int i) {
         setBadgeText("" + i);
     }
+
+
+    private void _setBadgeEmptyText() {
+        AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
+        anim.setInterpolator(new AccelerateDecelerateInterpolator()); //and this
+        anim.setDuration(500);
+        anim.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                Log.d(TAG, "onAnimationStart");
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Log.d(TAG, "onAnimationEnd");
+                mText = "";
+                calculateSize();
+                setVisibility(INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                Log.d(TAG, "onAnimationRepeat");
+
+            }
+        });
+        startAnimation(anim);
+    }
+
     public void setBadgeText(String text) {
-        String newText = "" + text;
-        AlphaAnimation anim = null;
-        int visibility = View.VISIBLE;
+        final String newText = "" + text;
+
         if (TextUtils.isEmpty(newText)) {
             // fade out
-            visibility = View.INVISIBLE;
-            Log.d(TAG, "fade out");
-//            setAlpha(1.0f);
-            anim = new AlphaAnimation(1.0f, 0.0f);
-            anim.setInterpolator(new AccelerateDecelerateInterpolator()); //and this
-            anim.setDuration(5000);
-            anim.setStartOffset(5000);
-            anim.setStartOffset(3000);
-
-//            this.setAlpha(1.0F);
-//            this.animate()
-//                    .alpha(0f)
-//                    .setDuration(400)
-//                    .setListener(new AnimatorListenerAdapter() {
-//                        @Override
-//                        public void onAnimationEnd(Animator animation) {
-//                            BadgeView.this.setVisibility(View.INVISIBLE);
-//                        }
-//                    });
+            // set value of mText must be done after animation
+            _setBadgeEmptyText();
+            return;
         } else if (TextUtils.isEmpty(mText)) {
             // fade in
-            Log.d(TAG, "fade in");
-            anim = new AlphaAnimation(0.0f, 1.0f);
+            AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
             anim.setInterpolator(new AccelerateDecelerateInterpolator()); //and this
-            anim.setDuration(500);
+            anim.setDuration(1000);
+            startAnimation(anim);
+            setVisibility(VISIBLE);
         }
 
         mText = newText;
         calculateSize();
-        if (anim != null) {
-            startAnimation(anim);
-            setVisibility(visibility);
-        } else {
-            invalidate();
-        }
+        invalidate();
     }
 
     public BadgeView setTextPadding(int padding, boolean isDp) {
@@ -266,16 +278,24 @@ public class BadgeView extends View {
 
         BadgeContainer container = new BadgeContainer(getContext());
         parent.removeView(target);
+
+        if (isParentLayout(target)) {
+            container.addView(target, new FrameLayout.LayoutParams(tlp.width, tlp.height));
+        } else {
+            LinearLayout llayout = new LinearLayout(getContext());
+            container.addView(llayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            llayout.setOrientation(LinearLayout.HORIZONTAL);
+            llayout.setBackgroundColor(Color.RED);
+            llayout.addView(target, new LinearLayout.LayoutParams(tlp.width, tlp.height));
+        }
+        mMarginLayoutParams = (ViewGroup.MarginLayoutParams)target.getLayoutParams();
+        container.addView(this);
+
+        tlp.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+        tlp.width = ViewGroup.LayoutParams.WRAP_CONTENT;
         parent.addView(container, index, tlp);
 
-        LinearLayout llayout = new LinearLayout(getContext());
-        llayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-        target.setLayoutParams(new LinearLayout.LayoutParams(tlp.width, tlp.height));
-        llayout.addView(target);
-
-        container.addView(llayout);
-        container.addView(this);
         // need to set id for relative layout
         if (parent instanceof RelativeLayout ||
             parent instanceof ConstraintLayout){
@@ -283,7 +303,6 @@ public class BadgeView extends View {
         }
 
         mContainer = container;
-        mLayoutTarget = llayout;
         updateLayoutTarget();
         return this;
     }
@@ -317,10 +336,6 @@ public class BadgeView extends View {
         float center = mSize/2.0F;
         canvas.drawColor(Color.TRANSPARENT);
         if (TextUtils.isEmpty(mText)) {
-            AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
-            anim.setInterpolator(new AccelerateDecelerateInterpolator()); //and this
-            anim.setDuration(6000);
-            startAnimation(anim);
             return;
         }
         canvas.drawCircle(mSize/2.0F, mSize/2.0F, mSize/2.0F, mCirclePaint);

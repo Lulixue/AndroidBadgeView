@@ -1,5 +1,7 @@
 package com.example.androidcanvasdemo.BadgeView;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,7 +13,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -21,26 +26,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import java.lang.reflect.MalformedParameterizedTypeException;
-
 public class BadgeView extends View {
     private static final String TAG = "BadgeView";
     private static final int DEFAULT_SIZE = 16;
-    public static final int DEFAULT_OFFSET_X_Y = -30;
+    public static final int DEFAULT_OFFSET_X_PX = -10;
+    public static final int DEFAULT_OFFSET_Y_PX = -10;
+    public static final int DEFAULT_TEXT_PADDING = 20;
+    public static final int DEFAULT_TEXT_SIZE_SP = 13;
 
     private View mTarget;
     private BadgeContainer mContainer;
     private int mSize = DEFAULT_SIZE;
     private String mText = "1";
-    private float mTextSize = 13;   // SP
+    private float mTextSize = DEFAULT_TEXT_SIZE_SP;   // SP
     private Paint mPaint;
     private Paint mCirclePaint;
-    private int mTextPadding = Math.abs(DEFAULT_OFFSET_X_Y) * 2;
+    private int mTextPadding = Math.abs(DEFAULT_TEXT_PADDING);
     private Rect mTextBound = new Rect();
     private LinearLayout mLayoutTarget;
     private BadgeGravity mGravity = BadgeGravity.EndTop;
-    private int offsetX = DEFAULT_OFFSET_X_Y;
-    private int offsetY = DEFAULT_OFFSET_X_Y;
+    private int mOffsetX = DEFAULT_OFFSET_X_PX;
+    private int mOffsetY = DEFAULT_OFFSET_Y_PX;
     private int mTextBgColor = Color.GREEN;
     private int mTextColor = Color.WHITE;
     private Paint.FontMetrics mFontMetrics;
@@ -107,7 +113,7 @@ public class BadgeView extends View {
     private void calculateSize() {
         mFontMetrics = mPaint.getFontMetrics();
         mPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
-        mSize = Math.max(mTextBound.width(), mTextBound.height()) + mTextPadding;
+        mSize = Math.max(mTextBound.width(), mTextBound.height()) + mTextPadding * 2;
 
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(mSize, mSize);
         lp.gravity = mGravity.toGravity();
@@ -115,8 +121,8 @@ public class BadgeView extends View {
     }
     private void updateLayoutTarget() {
         if (mLayoutTarget != null) {
-            int y = offsetY + mSize / 2;
-            int x = offsetX + mSize / 2;
+            int y = mOffsetY + mSize / 2;
+            int x = mOffsetX + mSize / 2;
             x = Math.max(x, 0);
             y = Math.max(y, 0);
             switch (mGravity) {
@@ -149,18 +155,54 @@ public class BadgeView extends View {
                 view instanceof  RelativeLayout;
     }
 
-    public BadgeView setBadgeNumber(int i) {
-        return setBadgeText("" + i);
+    public void setBadgeNumber(int i) {
+        setBadgeText("" + i);
     }
-    public BadgeView setBadgeText(String text) {
-        mText = "" + text;
+    public void setBadgeText(String text) {
+        String newText = "" + text;
+        AlphaAnimation anim = null;
+        int visibility = View.VISIBLE;
+        if (TextUtils.isEmpty(newText)) {
+            // fade out
+            visibility = View.INVISIBLE;
+            Log.d(TAG, "fade out");
+//            setAlpha(1.0f);
+            anim = new AlphaAnimation(1.0f, 0.0f);
+            anim.setInterpolator(new AccelerateDecelerateInterpolator()); //and this
+            anim.setDuration(5000);
+            anim.setStartOffset(5000);
+            anim.setStartOffset(3000);
+
+//            this.setAlpha(1.0F);
+//            this.animate()
+//                    .alpha(0f)
+//                    .setDuration(400)
+//                    .setListener(new AnimatorListenerAdapter() {
+//                        @Override
+//                        public void onAnimationEnd(Animator animation) {
+//                            BadgeView.this.setVisibility(View.INVISIBLE);
+//                        }
+//                    });
+        } else if (TextUtils.isEmpty(mText)) {
+            // fade in
+            Log.d(TAG, "fade in");
+            anim = new AlphaAnimation(0.0f, 1.0f);
+            anim.setInterpolator(new AccelerateDecelerateInterpolator()); //and this
+            anim.setDuration(500);
+        }
+
+        mText = newText;
         calculateSize();
-        invalidate();
-        return this;
+        if (anim != null) {
+            startAnimation(anim);
+            setVisibility(visibility);
+        } else {
+            invalidate();
+        }
     }
 
-    public BadgeView setBadgePadding(int padding, boolean isDp) {
-        mTextPadding = isDp ? getSizeInDp(padding) : padding;
+    public BadgeView setTextPadding(int padding, boolean isDp) {
+        mTextPadding = (isDp ? getSizeInDp(padding) : padding);
         calculateSize();
         invalidate();
         return this;
@@ -180,7 +222,6 @@ public class BadgeView extends View {
         return this;
     }
 
-
     public BadgeView setGravity(BadgeGravity gravity) {
         mGravity = gravity;
         calculateSize();
@@ -197,13 +238,13 @@ public class BadgeView extends View {
     }
 
     public BadgeView setOffsetX(int ox) {
-        offsetX = ox;
+        mOffsetX = ox;
         updateLayoutTarget();
         invalidate();
         return this;
     }
     public BadgeView setOffsetY(int oy) {
-        offsetY = oy;
+        mOffsetY = oy;
         updateLayoutTarget();
         invalidate();
         return this;
@@ -267,24 +308,27 @@ public class BadgeView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        drawBadge(canvas);
         super.onDraw(canvas);
         Log.d(TAG, "onDraw");
+        drawBadge(canvas);
     }
 
     private void drawBadge(Canvas canvas) {
         float center = mSize/2.0F;
         canvas.drawColor(Color.TRANSPARENT);
-//        if (TextUtils.isEmpty(mText)) {
-//            return;
-//        }
+        if (TextUtils.isEmpty(mText)) {
+            AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
+            anim.setInterpolator(new AccelerateDecelerateInterpolator()); //and this
+            anim.setDuration(6000);
+            startAnimation(anim);
+            return;
+        }
         canvas.drawCircle(mSize/2.0F, mSize/2.0F, mSize/2.0F, mCirclePaint);
         canvas.drawText(mText, center, center - mTextBound.exactCenterY() , mPaint);
     }
 
     @Override
     public void onDrawForeground(Canvas canvas) {
-        drawBadge(canvas);
         super.onDrawForeground(canvas);
         Log.d(TAG, "onDrawForeground");
     }

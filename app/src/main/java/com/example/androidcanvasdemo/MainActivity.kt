@@ -17,11 +17,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val badge = BadgeView.build(this).bind(button)
-        val badge2 = BadgeView.build(this).bind(layoutFrame)
 
-        mBadges.add(badge)
-        mBadges.add(badge2)
+        mBadges.add(BadgeView.build(this).bind(button))
+        mBadges.add(BadgeView.build(this).bind(layoutFrame))
+        mBadges.add(BadgeView.build(this).bind(mButton))
+        mBadges.add(BadgeView.build(this).bind(mTxtButton))
         button3.setOnClickListener {
             var txt = editText2.text.toString()
 
@@ -45,6 +45,23 @@ class MainActivity : AppCompatActivity() {
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
             }
+        })
+
+        switchPaddingType.setOnClickListener {
+            setTextPadding(seekBarTxtPadding.progress)
+        }
+
+        seekBarTxtPadding.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                setTextPadding(progress)
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar?) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar?) {
+            }
+
         })
 
         seekBarOffsetX.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
@@ -92,12 +109,25 @@ class MainActivity : AppCompatActivity() {
             offset = 50
             min = 5
         }
-        seekBarTxtSize.progress = 13 - min
-        seekBarOffsetX.progress = BadgeView.DEFAULT_OFFSET_X_Y + offset
-        seekBarOffsetY.progress = BadgeView.DEFAULT_OFFSET_X_Y + offset
+        seekBarTxtSize.progress = BadgeView.DEFAULT_TEXT_SIZE_SP - min
+        seekBarOffsetX.progress = BadgeView.DEFAULT_OFFSET_X_PX + offset
+        seekBarOffsetY.progress = BadgeView.DEFAULT_OFFSET_Y_PX + offset
+        seekBarTxtPadding.progress = BadgeView.DEFAULT_TEXT_PADDING
 
         mSizeMin = min
         mOffsetXY = offset
+    }
+
+    private fun setTextPadding(progress: Int) {
+        val dp = switchPaddingType.isChecked
+        for (b in mBadges) {
+            b.setTextPadding(progress, dp)
+        }
+        val unit = when (dp) {
+            true -> "dp"
+            false -> "px"
+        }
+        txtPadding.text = "" + progress + unit
     }
 
     fun getTxtSize(progress: Int) : Int {
@@ -128,5 +158,18 @@ class MainActivity : AppCompatActivity() {
             badge.setGravity(BadgeView.BadgeGravity.EndBottom)
         }
 
+    }
+
+    fun onClickVisible(view: View) {
+
+        for (badge in mBadges) {
+            badge.visibility = View.VISIBLE
+        }
+    }
+    fun onClickInvisible(view: View) {
+
+        for (badge in mBadges) {
+            badge.visibility = View.INVISIBLE
+        }
     }
 }

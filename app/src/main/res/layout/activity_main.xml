@@ -15,14 +15,98 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/button"
+    <FrameLayout
+        android:id="@+id/relative"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingEnd="10dp"
+            android:paddingStart="0dp"
+            android:paddingTop="6dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/button" />
+        </LinearLayout>
+        <com.example.androidcanvasdemo.BadgeView.BadgeView
+            android:layout_width="wrap_content"
+            android:layout_gravity="end|top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:visibility="gone"
+            android:text="Test13421312312"
+            android:foregroundGravity="top"
+            android:translationZ="5dp"
+            android:layout_gravity="top|end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
+
+
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@id/relative"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"  />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button"
+            android:id="@+id/mButton"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"  />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:id="@+id/mTxtButton"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button"
+            android:layout_marginStart="6dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"  />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/button"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/mButton"
+            app:layout_constraintTop_toTopOf="parent"  />
+
+        <FrameLayout
+            android:id="@+id/layoutFrame"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginStart="5dp"
+            app:layout_constraintStart_toEndOf="@id/button"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </LinearLayout>
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/theme_toggle_group"
@@ -35,7 +119,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button"
+        app:layout_constraintBottom_toTopOf="@id/visLayout"
         app:singleSelection="true">
 
         <com.google.android.material.button.MaterialButton
@@ -80,68 +164,68 @@
             android:text="@string/endbottom" />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
-    <FrameLayout
-        android:id="@+id/relative"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
 
-        <LinearLayout
+
+    <LinearLayout
+        android:id="@+id/visLayout"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/txtLayout"
+        android:layout_height="wrap_content">
+
+        <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="10dp"
-            android:paddingStart="0dp"
-            android:paddingTop="6dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:text="@string/visibility"  />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/button" />
-        </LinearLayout>
-        <com.example.androidcanvasdemo.BadgeView.BadgeView
+        <Button
+            android:id="@+id/invisible"
             android:layout_width="wrap_content"
-            android:layout_gravity="end|top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:visibility="gone"
-            android:text="Test13421312312"
-            android:foregroundGravity="top"
-            android:translationZ="5dp"
-            android:layout_gravity="top|end"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="10dp"
+            android:onClick="onClickInvisible"
+            android:text="@string/invisible"
+            app:layout_constraintStart_toEndOf="@+id/editText2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/visible"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </FrameLayout>
-
-    <FrameLayout
-        android:id="@+id/layoutFrame"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:background="@android:color/darker_gray"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toEndOf="@id/button"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
-
-    </FrameLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginStart="7dp"
+            android:layout_marginEnd="10dp"
+            android:onClick="onClickVisible"
+            android:text="@string/visible"
+            app:layout_constraintStart_toEndOf="@+id/editText2"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/txtLayout"
         android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="10dp"
         android:layout_width="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/theme_toggle_group"
+        app:layout_constraintBottom_toTopOf="@id/txtSizeLayout"
         android:layout_height="wrap_content">
+
+        <TextView
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text"  />
 
         <EditText
             android:id="@+id/editText2"
@@ -157,7 +241,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:text="OK"
             app:layout_constraintStart_toEndOf="@+id/editText2"
             app:layout_constraintTop_toTopOf="parent" />
@@ -167,10 +251,10 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:id="@+id/txtSizeLayout"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtLayout"
+        app:layout_constraintBottom_toTopOf="@id/switchPaddingType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -200,12 +284,13 @@
 
     </LinearLayout>
     <Switch
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSizeLayout"
+        app:layout_constraintBottom_toTopOf="@id/textPaddingLayout"
         android:layout_width="wrap_content"
         android:id="@+id/switchPaddingType"
+        android:showText="true"
         android:textOn="@string/text_padding_in_dp"
         android:textOff="@string/text_padding_in_px"
         android:layout_height="wrap_content">
@@ -214,11 +299,11 @@
     <LinearLayout
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
         android:id="@+id/textPaddingLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switchPaddingType"
+        app:layout_constraintBottom_toTopOf="@id/offsetXLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -249,11 +334,11 @@
     <LinearLayout
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         android:id="@+id/offsetXLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textPaddingLayout"
+        app:layout_constraintBottom_toTopOf="@+id/offsetYLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -284,11 +369,11 @@
     <LinearLayout
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
         android:id="@+id/offsetYLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/offsetXLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

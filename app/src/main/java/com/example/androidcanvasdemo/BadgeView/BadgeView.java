@@ -26,7 +26,7 @@ import java.lang.reflect.MalformedParameterizedTypeException;
 public class BadgeView extends View {
     private static final String TAG = "BadgeView";
     private static final int DEFAULT_SIZE = 16;
-    public static final int DEFAULT_OFFSET_X_Y = -10;
+    public static final int DEFAULT_OFFSET_X_Y = -30;
 
     private View mTarget;
     private BadgeContainer mContainer;
@@ -35,7 +35,7 @@ public class BadgeView extends View {
     private float mTextSize = 13;   // SP
     private Paint mPaint;
     private Paint mCirclePaint;
-    private int mTextPadding = 20;
+    private int mTextPadding = Math.abs(DEFAULT_OFFSET_X_Y) * 2;
     private Rect mTextBound = new Rect();
     private LinearLayout mLayoutTarget;
     private BadgeGravity mGravity = BadgeGravity.EndTop;
@@ -86,7 +86,10 @@ public class BadgeView extends View {
         final float scale = getContext().getResources().getDisplayMetrics().scaledDensity;
         return spSize * scale;
     }
-
+    private int getSizeInDp(float dipValue) {
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
     private void init() {
         mPaint = new Paint();
         mPaint.setColor(mTextColor);
@@ -114,6 +117,8 @@ public class BadgeView extends View {
         if (mLayoutTarget != null) {
             int y = offsetY + mSize / 2;
             int x = offsetX + mSize / 2;
+            x = Math.max(x, 0);
+            y = Math.max(y, 0);
             switch (mGravity) {
                 case StartBottom:
                     mLayoutTarget.setPadding(x, 0, 0, y);
@@ -154,6 +159,12 @@ public class BadgeView extends View {
         return this;
     }
 
+    public BadgeView setBadgePadding(int padding, boolean isDp) {
+        mTextPadding = isDp ? getSizeInDp(padding) : padding;
+        calculateSize();
+        invalidate();
+        return this;
+    }
     public BadgeView setTextColor(int color) {
         mTextColor = color;
         mPaint.setColor(color);

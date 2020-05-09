@@ -9,4 +9,7 @@
     <string name="default_text_size">13sp</string>
     <string name="offsetx">Offset X: </string>
     <string name="offset_y">Offset Y:</string>
+    <string name="text_padding">Text Padding:</string>
+    <string name="text_padding_in_dp">Text Padding in Dp</string>
+    <string name="text_padding_in_px">Text Padding in Px</string>
 </resources>

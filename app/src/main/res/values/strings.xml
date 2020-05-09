@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">AndroidCanvasDemo</string>
     <string name="button">Button</string>
+    <string name="starttop">StartTop</string>
+    <string name="startbottom">StartBottom</string>
+    <string name="endtop">EndTop</string>
+    <string name="endbottom">EndBottom</string>
+    <string name="textsize">TextSize: </string>
+    <string name="default_text_size">13sp</string>
+    <string name="offsetx">Offset X: </string>
+    <string name="offset_y">Offset Y:</string>
 </resources>

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,7 +26,7 @@ import java.lang.reflect.MalformedParameterizedTypeException;
 public class BadgeView extends View {
     private static final String TAG = "BadgeView";
     private static final int DEFAULT_SIZE = 16;
-    private static final int DEFAULT_GRAVITY = Gravity.TOP | Gravity.END;
+    public static final int DEFAULT_OFFSET_X_Y = -10;
 
     private View mTarget;
     private BadgeContainer mContainer;
@@ -37,12 +38,37 @@ public class BadgeView extends View {
     private int mTextPadding = 20;
     private Rect mTextBound = new Rect();
     private LinearLayout mLayoutTarget;
-    private int mGravity = DEFAULT_GRAVITY;
-    private int offsetX = -mTextPadding/2;
-    private int offsetY = -mTextPadding/2;
+    private BadgeGravity mGravity = BadgeGravity.EndTop;
+    private int offsetX = DEFAULT_OFFSET_X_Y;
+    private int offsetY = DEFAULT_OFFSET_X_Y;
+    private int mTextBgColor = Color.GREEN;
+    private int mTextColor = Color.WHITE;
+    private Paint.FontMetrics mFontMetrics;
     public BadgeView(Context context) {
         this(context, null);
     }
+
+    public enum BadgeGravity {
+        StartTop,
+        EndTop,
+        StartBottom,
+        EndBottom;
+
+        public int toGravity() {
+            switch (this) {
+                case StartBottom:
+                    return Gravity.START | Gravity.BOTTOM;
+                case StartTop:
+                    return Gravity.START | Gravity.TOP;
+                case EndBottom:
+                    return Gravity.END | Gravity.BOTTOM;
+                case EndTop:
+                default:
+                    return Gravity.END | Gravity.TOP;
+            }
+        }
+    }
+
 
     public BadgeView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
@@ -63,37 +89,53 @@ public class BadgeView extends View {
 
     private void init() {
         mPaint = new Paint();
-        mPaint.setColor(Color.WHITE);
+        mPaint.setColor(mTextColor);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setAntiAlias(true);
         mPaint.setTextSize(getTextSizeInSp(mTextSize));
         mPaint.setTextAlign(Paint.Align.CENTER);
 
         mCirclePaint = new Paint();
-        mCirclePaint.setColor(Color.GREEN);
+        mCirclePaint.setColor(mTextBgColor);
         mCirclePaint.setStyle(Paint.Style.FILL);
         calculateSize();
     }
 
     private void calculateSize() {
+        mFontMetrics = mPaint.getFontMetrics();
         mPaint.getTextBounds(mText, 0, mText.length(), mTextBound);
         mSize = Math.max(mTextBound.width(), mTextBound.height()) + mTextPadding;
 
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(mSize, mSize);
-        lp.gravity = mGravity;
+        lp.gravity = mGravity.toGravity();
         setLayoutParams(lp);
-
     }
     private void updateLayoutTarget() {
-        mLayoutTarget.setPadding(0, offsetY + mSize/2, offsetX + mSize/2, 0);
+        if (mLayoutTarget != null) {
+            int y = offsetY + mSize / 2;
+            int x = offsetX + mSize / 2;
+            switch (mGravity) {
+                case StartBottom:
+                    mLayoutTarget.setPadding(x, 0, 0, y);
+                    break;
+                case StartTop:
+                    mLayoutTarget.setPadding(x, y, 0, 0);
+                    break;
+                case EndBottom:
+                    mLayoutTarget.setPadding(0, 0, x, y);
+                    break;
+                case EndTop:
+                default:
+                    mLayoutTarget.setPadding(0, y, x, 0);
+                    break;
+            }
+        }
     }
 
     public static BadgeView build(Context context) {
         return new BadgeView(context);
     }
 
-    private static final int MIN_WIDTH = 20;
-    private static final int MIN_HEIGHT = 20;
     private boolean isParentLayout(View view) {
         return view instanceof LinearLayout ||
                 view instanceof ConstraintLayout ||
@@ -102,19 +144,64 @@ public class BadgeView extends View {
                 view instanceof  RelativeLayout;
     }
 
-    public void setBadgeNumber(int i) {
-        setBadgeText("" + i);
+    public BadgeView setBadgeNumber(int i) {
+        return setBadgeText("" + i);
     }
-    public void setBadgeText(String text) {
+    public BadgeView setBadgeText(String text) {
         mText = "" + text;
         calculateSize();
         invalidate();
+        return this;
+    }
+
+    public BadgeView setTextColor(int color) {
+        mTextColor = color;
+        mPaint.setColor(color);
+        invalidate();
+        return this;
+    }
+    public BadgeView setTextSizeSp(float size) {
+        mTextSize = size;
+        mPaint.setTextSize(getTextSizeInSp(size));
+        calculateSize();
+        updateLayoutTarget();
+        invalidate();
+        return this;
+    }
+
+
+    public BadgeView setGravity(BadgeGravity gravity) {
+        mGravity = gravity;
+        calculateSize();
+        updateLayoutTarget();
+        invalidate();
+        return this;
+    }
+
+    public BadgeView setTextBgColor(int color) {
+        mTextBgColor = color;
+        mCirclePaint.setColor(color);
+        invalidate();
+        return this;
+    }
+
+    public BadgeView setOffsetX(int ox) {
+        offsetX = ox;
+        updateLayoutTarget();
+        invalidate();
+        return this;
+    }
+    public BadgeView setOffsetY(int oy) {
+        offsetY = oy;
+        updateLayoutTarget();
+        invalidate();
+        return this;
     }
 
     public BadgeView bind(View target) throws Exception {
          if (mContainer != null) {
              if (target != mTarget) {
-                 throw new Exception("change binding not supported!");
+                 throw new Exception("target already bind!");
              }
              return this;
          }
@@ -126,24 +213,25 @@ public class BadgeView extends View {
         int index = parent.indexOfChild(target);
 
         BadgeContainer container = new BadgeContainer(getContext());
-        parent.removeViewAt(index);
+        parent.removeView(target);
         parent.addView(container, index, tlp);
 
-//        if (isParentLayout(target)) {
-//            container.addView(target);
-//        } else {
-            LinearLayout llayout = new LinearLayout(getContext());
-            container.addView(llayout, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        LinearLayout llayout = new LinearLayout(getContext());
+        llayout.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+        target.setLayoutParams(new LinearLayout.LayoutParams(tlp.width, tlp.height));
+        llayout.addView(target);
 
-            llayout.addView(target, tlp);
-            LinearLayout.LayoutParams llp = (LinearLayout.LayoutParams) target.getLayoutParams();
-            llp.setMargins(0, 0, 0, 0);
-            target.setLayoutParams(llp);
-
-            mLayoutTarget = llayout;
-//        }
+        container.addView(llayout);
         container.addView(this);
+        // need to set id for relative layout
+        if (parent instanceof RelativeLayout ||
+            parent instanceof ConstraintLayout){
+            container.setId(target.getId());
+        }
+
         mContainer = container;
+        mLayoutTarget = llayout;
         updateLayoutTarget();
         return this;
     }
@@ -175,9 +263,12 @@ public class BadgeView extends View {
 
     private void drawBadge(Canvas canvas) {
         float center = mSize/2.0F;
-//        canvas.drawColor(Color.RED);
+        canvas.drawColor(Color.TRANSPARENT);
+//        if (TextUtils.isEmpty(mText)) {
+//            return;
+//        }
         canvas.drawCircle(mSize/2.0F, mSize/2.0F, mSize/2.0F, mCirclePaint);
-        canvas.drawText(mText, center, center + mTextBound.height() * 0.5F , mPaint);
+        canvas.drawText(mText, center, center - mTextBound.exactCenterY() , mPaint);
     }
 
     @Override

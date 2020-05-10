@@ -6,14 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.androidcanvasdemo.DemoView
-        android:visibility="gone"
-        android:id="@+id/demoView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <FrameLayout
         android:id="@+id/relative"
@@ -40,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/button" />
         </LinearLayout>
-        <com.example.androidcanvasdemo.BadgeView.BadgeView
+        <com.lulixue.android.BadgeView.BadgeView
             android:layout_width="wrap_content"
             android:layout_gravity="end|top"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,7 +68,7 @@
                 android:background="@android:color/darker_gray"
                 />
         </LinearLayout>
-        <com.example.androidcanvasdemo.BadgeView.BadgeView
+        <com.lulixue.android.BadgeView.BadgeView
             android:layout_width="wrap_content"
             android:layout_gravity="end|top"
             app:layout_constraintEnd_toEndOf="parent"

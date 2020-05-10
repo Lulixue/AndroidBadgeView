@@ -1,2 +1,2 @@
-rootProject.name='AndroidCanvasDemo'
+rootProject.name='AndroidBadgeView'
 include ':app'

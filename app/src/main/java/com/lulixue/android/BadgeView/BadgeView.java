@@ -1,4 +1,4 @@
-package com.example.androidcanvasdemo.BadgeView;
+package com.lulixue.android.BadgeView;
 
 import android.content.Context;
 import android.graphics.Canvas;

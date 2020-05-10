@@ -1,4 +1,4 @@
-package com.example.androidcanvasdemo
+package com.lulixue.android
 
 import android.os.Build
 import android.os.Bundle
@@ -9,7 +9,8 @@ import android.view.animation.AlphaAnimation
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
-import com.example.androidcanvasdemo.BadgeView.BadgeView
+import com.example.androidcanvasdemo.R
+import com.lulixue.android.BadgeView.BadgeView
 import kotlinx.android.synthetic.main.activity_main.*
 
 

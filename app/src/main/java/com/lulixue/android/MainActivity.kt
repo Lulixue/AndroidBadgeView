@@ -266,4 +266,10 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    fun onKeepOriginalSize(view: View) {
+        for (badge in mBadges) {
+            badge.setKeepOriginalSize(keepOriginalCheck.isChecked)
+        }
+    }
 }

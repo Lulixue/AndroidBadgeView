@@ -24,4 +24,5 @@
     <string name="right"><![CDATA[>]]></string>
     <string name="top">∧</string>
     <string name="bottom">∨</string>
+    <string name="keep_original_size">Keep Original Size</string>
 </resources>

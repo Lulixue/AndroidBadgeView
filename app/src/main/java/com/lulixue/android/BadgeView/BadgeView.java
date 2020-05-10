@@ -53,6 +53,7 @@ public class BadgeView extends View {
     private Paint.FontMetrics mFontMetrics;
     private boolean mAutoFit = false;
     private boolean mFadeAnimation = true;
+    private boolean mKeepOriginalSize = false;
     public BadgeView(Context context) {
         this(context, null);
     }
@@ -130,26 +131,52 @@ public class BadgeView extends View {
     }
     private void updateLayoutTarget() {
         if (mMarginLayoutParams != null) {
+            final FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams)getLayoutParams();
             int y = mOffsetY + mSize / 2;
             int x = mOffsetX + mSize / 2;
-            x = Math.max(x, 0);
-            y = Math.max(y, 0);
-            switch (mGravity) {
-                case StartBottom:
-                    mMarginLayoutParams.setMargins(x, 0, 0, y);
-                    break;
-                case StartTop:
-                    mMarginLayoutParams.setMargins(x, y, 0, 0);
-                    break;
-                case EndBottom:
-                    mMarginLayoutParams.setMargins(0, 0, x, y);
-                    break;
-                case EndTop:
-                default:
-                    mMarginLayoutParams.setMargins(0, y, x, 0);
-                    break;
+            if (mKeepOriginalSize) {
+                x = -x;
+                y = -y;
+                switch (mGravity) {
+                    case StartBottom:
+                        lp.setMargins(x, 0, 0, y);
+                        break;
+                    case StartTop:
+                        lp.setMargins(x, y, 0, 0);
+                        break;
+                    case EndBottom:
+                        lp.setMargins(0, 0, x, y);
+                        break;
+                    case EndTop:
+                    default:
+                        lp.setMargins(0, y, x, 0);
+                        break;
+                }
+                setLayoutParams(lp);
+                mMarginLayoutParams.setMargins(0, 0, 0, 0);
+                mTarget.setLayoutParams(mMarginLayoutParams);
+            } else {
+                x = Math.max(x, 0);
+                y = Math.max(y, 0);
+                switch (mGravity) {
+                    case StartBottom:
+                        mMarginLayoutParams.setMargins(x, 0, 0, y);
+                        break;
+                    case StartTop:
+                        mMarginLayoutParams.setMargins(x, y, 0, 0);
+                        break;
+                    case EndBottom:
+                        mMarginLayoutParams.setMargins(0, 0, x, y);
+                        break;
+                    case EndTop:
+                    default:
+                        mMarginLayoutParams.setMargins(0, y, x, 0);
+                        break;
+                }
+                mTarget.setLayoutParams(mMarginLayoutParams);
+                lp.setMargins(0, 0, 0, 0);
+                setLayoutParams(lp);
             }
-            mTarget.setLayoutParams(mMarginLayoutParams);
         }
     }
 
@@ -171,6 +198,13 @@ public class BadgeView extends View {
         } else {
             return setBadgeText("" + i);
         }
+    }
+
+    public BadgeView setKeepOriginalSize(boolean keep) {
+        mKeepOriginalSize = keep;
+        updateLayoutTarget();
+        invalidate();
+        return this;
     }
 
     public String getBadgeText() {
@@ -266,6 +300,9 @@ public class BadgeView extends View {
     public BadgeView setTextPadding(int padding, boolean isDp) {
         mTextPadding = (isDp ? getSizeInDp(padding) : padding);
         calculateSize();
+        if (mKeepOriginalSize) {
+            updateLayoutTarget();
+        }
         invalidate();
         return this;
     }

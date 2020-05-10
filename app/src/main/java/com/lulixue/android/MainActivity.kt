@@ -211,6 +211,14 @@ class MainActivity : AppCompatActivity() {
         seekBarOffsetX.progress = BadgeView.DEFAULT_OFFSET_X_PX + mOffsetXY
         seekBarOffsetY.progress = BadgeView.DEFAULT_OFFSET_Y_PX + mOffsetXY
         seekBarTxtPadding.progress = BadgeView.DEFAULT_TEXT_PADDING
+        for (badge in mBadges) {
+            badge.badgeText = BadgeView.DEFAULT_TEXT
+            badge.setFadeAnimation(true)
+            badge.offsetX = BadgeView.DEFAULT_OFFSET_X_PX + mOffsetXY
+            badge.offsetY = BadgeView.DEFAULT_OFFSET_Y_PX + mOffsetXY
+            badge.setTextSizeSp(seekBarTxtSize.progress.toFloat())
+            badge.setTextPadding(seekBarTxtPadding.progress, false)
+        }
     }
 
     fun onLeft(view: View) {
@@ -244,5 +252,17 @@ class MainActivity : AppCompatActivity() {
             offset = badge.offsetY
         }
         seekBarOffsetY.progress = getOffset(offset)
+    }
+
+    fun onNumberAdd(view: View) {
+        for (badge in mBadges) {
+            badge.badgeNumber = ++badge.badgeNumber;
+        }
+    }
+    fun onNumberMinus(view: View) {
+        for (badge in mBadges) {
+            badge.badgeNumber = --badge.badgeNumber;
+        }
+
     }
 }

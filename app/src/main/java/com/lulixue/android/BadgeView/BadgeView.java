@@ -33,11 +33,11 @@ public class BadgeView extends View {
     public static final int DEFAULT_TEXT_PADDING = 16;
     public static final int DEFAULT_TEXT_SIZE_SP = 14;
     private static final int ANIMATION_DURATION = 300;
-    private static final String DEFAULT_TEXT = "0";
+    public static final String DEFAULT_TEXT = "1";
     private View mTarget;
     private BadgeContainer mContainer;
     private int mSize = DEFAULT_SIZE;
-    private String mText = "1";
+    private String mText = DEFAULT_TEXT;
     private float mTextSize = DEFAULT_TEXT_SIZE_SP;   // SP
     private Paint mTextPaint;
     private Paint mCirclePaint;
@@ -171,6 +171,20 @@ public class BadgeView extends View {
         } else {
             return setBadgeText("" + i);
         }
+    }
+
+    public String getBadgeText() {
+        return mText;
+    }
+
+    public int getBadgeNumber() {
+        int number = 0;
+        try {
+            number = Integer.parseInt(mText);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return number;
     }
 
     public BadgeView setAutoFit(boolean autoFit) {

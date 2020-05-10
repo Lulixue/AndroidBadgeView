@@ -294,9 +294,8 @@
 
         <EditText
             android:id="@+id/editText2"
-            android:layout_width="0dp"
+            android:layout_width="60dp"
             android:ems="10"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:layout_marginStart="15dp"  />
@@ -304,13 +303,29 @@
         <com.google.android.material.button.MaterialButton
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="7dp"
             android:layout_marginEnd="10dp"
-            android:text="OK"
-            app:layout_constraintStart_toEndOf="@+id/editText2"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="OK" />
+
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:id="@+id/addNumber"
+            android:layout_width="50dp"
+            android:onClick="onNumberAdd"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:text="+" />
+
+        <com.google.android.material.button.MaterialButton
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:id="@+id/minusNumber"
+            android:onClick="onNumberMinus"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="-"   />
     </LinearLayout>
 
     <LinearLayout

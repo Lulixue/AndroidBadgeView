@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidCanvasDemo</string>
+    <string name="app_name">AndroidBadgeView</string>
     <string name="button">Button</string>
     <string name="starttop">S\'Top</string>
     <string name="startbottom">S\'Bottom</string>

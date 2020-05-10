@@ -128,7 +128,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:background="@color/colorPrimaryDark"
         app:layout_constraintTop_toBottomOf="@id/layoutButtons"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,6 +144,7 @@
             app:layout_constraintTop_toTopOf="parent"
             />
     </LinearLayout>
+
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/theme_toggle_group"
         android:layout_width="wrap_content"
@@ -156,7 +156,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/visLayout"
+        app:layout_constraintBottom_toTopOf="@id/animationLayout"
         app:singleSelection="true">
 
         <com.google.android.material.button.MaterialButton
@@ -185,6 +185,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minWidth="60dp"
+            android:id="@+id/btnEndTop"
             android:paddingStart="8dp"
             android:onClick="onClickET"
             android:paddingEnd="12dp"
@@ -204,10 +205,43 @@
 
 
     <LinearLayout
+        android:id="@+id/animationLayout"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toTopOf="@id/visLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/animation"
+            android:onClick="onFadeAnimation"
+            android:text="@string/fade_animation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <CheckBox
+            android:id="@+id/autoFit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onAutoFit"
+            android:text="@string/auto_fit" />
+
+        <Button
+            android:text="@string/reset"
+            android:onClick="onReset"
+            android:layout_marginStart="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/visLayout"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:layout_marginBottom="10dp"
         android:layout_marginStart="10dp"
         android:layout_width="match_parent"
@@ -218,7 +252,7 @@
 
         <TextView
             app:layout_constraintStart_toStartOf="parent"
-            android:textSize="16sp"
+            android:textSize="@dimen/item_header_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/visibility"  />
@@ -250,7 +284,7 @@
         android:id="@+id/txtLayout"
         android:orientation="horizontal"
         android:gravity="center_vertical"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="@dimen/item_space"
         android:layout_marginStart="10dp"
         android:layout_width="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -260,7 +294,7 @@
 
         <TextView
             app:layout_constraintStart_toStartOf="parent"
-            android:textSize="16sp"
+            android:textSize="@dimen/item_header_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text"  />
@@ -289,16 +323,16 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:id="@+id/txtSizeLayout"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="@dimen/item_space"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/switchPaddingType"
+        app:layout_constraintBottom_toTopOf="@id/txtPaddingUnitLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             app:layout_constraintStart_toStartOf="parent"
-            android:textSize="16sp"
+            android:textSize="@dimen/item_header_size"
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -321,23 +355,36 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-    <Switch
+    <LinearLayout
+        android:id="@+id/txtPaddingUnitLayout"
         android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@id/textPaddingLayout"
-        android:layout_width="wrap_content"
-        android:id="@+id/switchPaddingType"
-        android:showText="true"
-        android:textOn="@string/text_padding_in_dp"
-        android:textOff="@string/text_padding_in_px"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <TextView
+            android:text="@string/text_padding"
+            android:textSize="@dimen/item_header_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Switch
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="wrap_content"
+            android:id="@+id/switchPaddingType"
+            android:showText="true"
+            android:textSize="12sp"
+            android:textOn="@string/text_padding_in_dp"
+            android:textOff="@string/text_padding_in_px"
+            android:layout_height="wrap_content">
 
-    </Switch>
+        </Switch>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="@dimen/item_space"
         android:id="@+id/textPaddingLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -347,7 +394,7 @@
 
         <TextView
             app:layout_constraintStart_toStartOf="parent"
-            android:textSize="16sp"
+            android:textSize="@dimen/item_header_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/text_padding"  />
@@ -372,7 +419,7 @@
     <LinearLayout
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="@dimen/item_space"
         android:id="@+id/offsetXLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -382,7 +429,7 @@
 
         <TextView
             app:layout_constraintStart_toStartOf="parent"
-            android:textSize="16sp"
+            android:textSize="@dimen/item_header_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/offsetx"  />
@@ -407,17 +454,17 @@
     <LinearLayout
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="@dimen/item_space"
         android:id="@+id/offsetYLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/adjustLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
             app:layout_constraintStart_toStartOf="parent"
-            android:textSize="16sp"
+            android:textSize="@dimen/item_header_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/offset_y"  />
@@ -438,5 +485,42 @@
             android:layout_height="wrap_content" />
 
     </LinearLayout>
-
+    <LinearLayout
+        android:id="@+id/adjustLayout"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="@string/adjust"
+            android:textSize="@dimen/item_header_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:text="@string/left"
+            android:onClick="onLeft"
+            android:layout_marginStart="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <Button
+            android:text="@string/right"
+            android:onClick="onRight"
+            android:layout_marginStart="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <Button
+            android:text="@string/top"
+            android:onClick="onTop"
+            android:layout_marginStart="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+        <Button
+            android:text="@string/bottom"
+            android:onClick="onBottom"
+            android:layout_marginStart="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"/>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

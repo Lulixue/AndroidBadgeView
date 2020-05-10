@@ -1,7 +1,5 @@
 package com.example.androidcanvasdemo
 
-import android.animation.ObjectAnimator
-import android.animation.ObjectAnimator.ofFloat
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -24,10 +22,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//        mBadges.add(BadgeView.build(this).bind(button))
-//        mBadges.add(BadgeView.build(this).bind(mButton))
-//        mBadges.add(BadgeView.build(this).bind(mTxtButton))
-        Log.d(TAG, "main: " + Thread.currentThread().toString())
+        animation.isChecked = true
+        mBadges.add(BadgeView.build(this).bind(button))
+        mBadges.add(BadgeView.build(this).bind(mButton))
+        mBadges.add(BadgeView.build(this).bind(mTxtButton))
         mBadges.add(BadgeView.build(this).bind(layoutFrame))
         button3.setOnClickListener {
             val txt = editText2.text.toString()
@@ -38,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        btnEndTop.performClick()
         seekBarTxtSize.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val size = getTxtSize(progress)
@@ -188,5 +187,61 @@ class MainActivity : AppCompatActivity() {
             badge.startAnimation(anim)
             badge.visibility = View.INVISIBLE
         }
+    }
+
+    fun onFadeAnimation(view: View) {
+        for (badge in mBadges) {
+            badge.setFadeAnimation(animation.isChecked)
+        }
+    }
+
+    fun onAutoFit(view: View) {
+        for (badge in mBadges) {
+            badge.setAutoFit(autoFit.isChecked)
+        }
+    }
+
+    fun onReset(view: View) {
+        animation.isChecked = true
+        autoFit.isChecked = false
+        switchPaddingType.isChecked = false
+
+        seekBarTxtSize.progress = BadgeView.DEFAULT_TEXT_SIZE_SP - mSizeMin
+        seekBarOffsetX.progress = BadgeView.DEFAULT_OFFSET_X_PX + mOffsetXY
+        seekBarOffsetY.progress = BadgeView.DEFAULT_OFFSET_Y_PX + mOffsetXY
+        seekBarTxtPadding.progress = BadgeView.DEFAULT_TEXT_PADDING
+    }
+
+    fun onLeft(view: View) {
+        var offset = 0
+        for (badge in mBadges) {
+            badge.addOffsetX(-1)
+            offset = badge.offsetX
+        }
+        seekBarOffsetX.progress = getOffset(offset)
+    }
+    fun onRight(view: View) {
+        var offset = 0
+        for (badge in mBadges) {
+            badge.addOffsetX(1)
+            offset = badge.offsetX
+        }
+        seekBarOffsetX.progress = getOffset(offset)
+    }
+    fun onTop(view: View) {
+        var offset = 0
+        for (badge in mBadges) {
+            badge.addOffsetY(1)
+            offset = badge.offsetY
+        }
+        seekBarOffsetY.progress = getOffset(offset)
+    }
+    fun onBottom(view: View) {
+        var offset = 0
+        for (badge in mBadges) {
+            badge.addOffsetY(-1)
+            offset = badge.offsetY
+        }
+        seekBarOffsetY.progress = getOffset(offset)
     }
 }

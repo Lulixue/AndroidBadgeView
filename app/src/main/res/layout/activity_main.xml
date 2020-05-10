@@ -1,541 +1,547 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
 
-    <FrameLayout
-        android:id="@+id/relative"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/relative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="10dp"
-            android:paddingStart="0dp"
-            android:paddingTop="6dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                android:id="@+id/button2"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/button" />
-        </LinearLayout>
-        <com.lulixue.android.BadgeView.BadgeView
+                android:paddingStart="0dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/button" />
+            </LinearLayout>
+
+            <com.lulixue.android.BadgeView.BadgeView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:foregroundGravity="top"
+                android:text="Test13421312312"
+                android:translationZ="5dp"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/relative2"
             android:layout_width="wrap_content"
-            android:layout_gravity="end|top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:visibility="gone"
-            android:text="Test13421312312"
-            android:foregroundGravity="top"
-            android:translationZ="5dp"
-            android:layout_gravity="top|end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </FrameLayout>
-    <FrameLayout
-        android:id="@+id/relative2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/relative">
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/relative"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="0dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="10dp">
+
+                <FrameLayout
+                    android:id="@+id/layoutFrame2"
+                    android:layout_width="100dp"
+                    android:layout_height="50dp"
+                    android:background="@android:color/darker_gray" />
+            </LinearLayout>
+
+            <com.lulixue.android.BadgeView.BadgeView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </FrameLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/layoutButtons"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingEnd="10dp"
-            android:paddingStart="0dp"
-            android:paddingTop="10dp" >
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/relative">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mButton"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mTxtButton"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/button"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/button"
+                app:layout_constraintStart_toEndOf="@id/mButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutButtons">
 
             <FrameLayout
-                android:id="@+id/layoutFrame2"
+                android:id="@+id/layoutFrame"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@android:color/darker_gray"
-                />
+                app:layout_constraintStart_toEndOf="@id/button"
+                app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
-        <com.lulixue.android.BadgeView.BadgeView
-            android:layout_width="wrap_content"
-            android:layout_gravity="end|top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="wrap_content"/>
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        app:layout_constraintTop_toBottomOf="@id/relative"
-        android:id="@+id/layoutButtons"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button"
-            android:id="@+id/mButton"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button"
-            android:layout_marginStart="5dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"  />
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:id="@+id/mTxtButton"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button"
-            android:layout_marginStart="6dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"  />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/button"
-            android:layout_marginStart="5dp"
-            app:layout_constraintStart_toEndOf="@id/mButton"
-            app:layout_constraintTop_toTopOf="parent"  />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        app:layout_constraintTop_toBottomOf="@id/layoutButtons"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <FrameLayout
-            android:id="@+id/layoutFrame"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:background="@android:color/darker_gray"
-            android:layout_marginStart="5dp"
-            app:layout_constraintStart_toEndOf="@id/button"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-    </LinearLayout>
-
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/theme_toggle_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="5dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/animationLayout"
-        app:singleSelection="true">
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="60dp"
-            android:onClick="onClickST"
-            android:paddingStart="8dp"
-            android:paddingEnd="12dp"
-            android:text="@string/starttop" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnStructure"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="60dp"
-            android:onClick="onClickSB"
-            android:paddingStart="8dp"
-            android:paddingEnd="12dp"
-            android:text="@string/startbottom" />
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="60dp"
-            android:id="@+id/btnEndTop"
-            android:paddingStart="8dp"
-            android:onClick="onClickET"
-            android:paddingEnd="12dp"
-            android:text="@string/endtop" />
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:minWidth="60dp"
-            android:onClick="onClickEB"
-            android:paddingStart="8dp"
-            android:paddingEnd="12dp"
-            android:text="@string/endbottom" />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
-
-
-    <LinearLayout
-        android:id="@+id/animationLayout"
-        android:layout_marginStart="10dp"
-        app:layout_constraintBottom_toTopOf="@id/visLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/animation"
-            android:onClick="onFadeAnimation"
-            android:text="@string/fade_animation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/autoFit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onAutoFit"
-            android:text="@string/auto_fit" />
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="@string/reset"
-            android:onClick="onReset"
-            android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/visLayout"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
+    <ScrollView
         android:layout_marginTop="10dp"
-        android:visibility="gone"
-        android:layout_marginBottom="10dp"
-        android:layout_marginStart="10dp"
+        android:id="@+id/scrollView"
+        android:paddingBottom="20dp"
         android:layout_width="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/txtLayout"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/theme_toggle_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
+                android:orientation="horizontal"
+                app:singleSelection="true">
 
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="@dimen/item_header_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/visibility"  />
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="60dp"
+                    android:onClick="onClickST"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="12dp"
+                    android:text="@string/starttop" />
 
-        <Button
-            android:id="@+id/invisible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
-            android:layout_marginEnd="10dp"
-            android:onClick="onClickInvisible"
-            android:text="@string/invisible"
-            app:layout_constraintStart_toEndOf="@+id/editText2"
-            app:layout_constraintTop_toTopOf="parent" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnStructure"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="60dp"
+                    android:onClick="onClickSB"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="12dp"
+                    android:text="@string/startbottom" />
 
-        <Button
-            android:id="@+id/visible"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginEnd="10dp"
-            android:onClick="onClickVisible"
-            android:text="@string/visible"
-            app:layout_constraintStart_toEndOf="@+id/editText2"
-            app:layout_constraintTop_toTopOf="parent" />
-    </LinearLayout>
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="60dp"
+                    android:id="@+id/btnEndTop"
+                    android:paddingStart="8dp"
+                    android:onClick="onClickET"
+                    android:paddingEnd="12dp"
+                    android:text="@string/endtop" />
 
-    <LinearLayout
-        android:id="@+id/txtLayout"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginBottom="@dimen/item_space"
-        android:layout_marginStart="10dp"
-        android:layout_width="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/txtSizeLayout"
-        android:layout_height="wrap_content">
-
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="@dimen/item_header_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text"  />
-
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="60dp"
-            android:ems="10"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:layout_marginStart="15dp"  />
-
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:id="@+id/button3"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="7dp"
-            android:layout_marginEnd="10dp"
-            android:text="OK" />
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="60dp"
+                    android:onClick="onClickEB"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="12dp"
+                    android:text="@string/endbottom" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
 
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:id="@+id/addNumber"
-            android:layout_width="50dp"
-            android:onClick="onNumberAdd"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:text="+" />
 
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:id="@+id/minusNumber"
-            android:onClick="onNumberMinus"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:text="-"   />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/animationLayout"
+                android:layout_marginStart="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:id="@+id/txtSizeLayout"
-        android:layout_marginBottom="@dimen/item_space"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/txtPaddingUnitLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/animation"
+                    android:onClick="onFadeAnimation"
+                    android:text="@string/fade_animation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="@dimen/item_header_size"
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/textsize"  />
 
-        <SeekBar
-            style="@style/Slider"
-            android:id="@+id/seekBarTxtSize"
-            android:max="50"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/autoFit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onAutoFit"
+                    android:text="@string/auto_fit" />
 
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="16sp"
-            android:id="@+id/txtSize"
-            android:text="@string/default_text_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:text="@string/reset"
+                    android:onClick="onReset"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/txtPaddingUnitLayout"
-        android:layout_marginStart="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/textPaddingLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="@string/text_padding"
-            android:textSize="@dimen/item_header_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <Switch
-            style="@style/TextAppearance.AppCompat.Widget.Switch"
-            android:switchPadding="-5dp"
-            android:switchTextAppearance="@style/TextAppearance.AppCompat"
-            android:thumbTextPadding="5dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_width="wrap_content"
-            android:id="@+id/switchPaddingType"
-            android:showText="true"
-            android:textOn="@string/text_padding_in_dp"
-            android:textOff="@string/text_padding_in_px"
-            android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:id="@+id/visLayout"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </LinearLayout>
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="@dimen/item_header_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/visibility"  />
 
-    <LinearLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="@dimen/item_space"
-        android:id="@+id/textPaddingLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/offsetXLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/invisible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginEnd="10dp"
+                    android:onClick="onClickInvisible"
+                    android:text="@string/invisible"
+                    app:layout_constraintStart_toEndOf="@+id/editText2"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="@dimen/item_header_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/text_padding"  />
+                <Button
+                    android:id="@+id/visible"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="10dp"
+                    android:onClick="onClickVisible"
+                    android:text="@string/visible"
+                    app:layout_constraintStart_toEndOf="@+id/editText2"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
 
-        <SeekBar
-            style="@style/Slider"
-            android:id="@+id/seekBarTxtPadding"
-            android:max="50"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:id="@+id/txtLayout"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="@dimen/item_space"
+                android:layout_marginStart="10dp"
+                android:descendantFocusability="beforeDescendants"
+                android:focusableInTouchMode="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="16sp"
-            android:id="@+id/txtPadding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="@dimen/item_header_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text"  />
 
-    </LinearLayout>
+                <EditText
+                    android:id="@+id/editText2"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
 
-    <LinearLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="@dimen/item_space"
-        android:id="@+id/offsetXLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/offsetYLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:id="@+id/button3"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="OK" />
 
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="@dimen/item_header_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/offsetx"  />
 
-        <SeekBar
-            style="@style/Slider"
-            android:id="@+id/seekBarOffsetX"
-            android:max="50"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:id="@+id/addNumber"
+                    android:layout_width="50dp"
+                    android:onClick="onNumberAdd"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:text="+" />
 
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="16sp"
-            android:id="@+id/offsetX"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:id="@+id/minusNumber"
+                    android:onClick="onNumberMinus"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="-"   />
+            </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:id="@+id/txtSizeLayout"
+                android:layout_marginBottom="@dimen/item_space"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="@dimen/item_space"
-        android:id="@+id/offsetYLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/adjustLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="@dimen/item_header_size"
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/textsize"  />
 
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="@dimen/item_header_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/offset_y"  />
+                <SeekBar
+                    style="@style/Slider"
+                    android:id="@+id/seekBarTxtSize"
+                    android:max="50"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
 
-        <SeekBar
-            style="@style/Slider"
-            android:id="@+id/seekBarOffsetY"
-            android:max="50"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="16sp"
+                    android:id="@+id/txtSize"
+                    android:text="@string/default_text_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
-        <TextView
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="16sp"
-            android:id="@+id/offsetY"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/txtPaddingUnitLayout"
+                android:layout_marginStart="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@string/text_padding"
+                    android:textSize="@dimen/item_header_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Switch
+                    style="@style/TextAppearance.AppCompat.Widget.Switch"
+                    android:switchPadding="-5dp"
+                    android:switchTextAppearance="@style/TextAppearance.AppCompat"
+                    android:thumbTextPadding="5dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/switchPaddingType"
+                    android:showText="true"
+                    android:textOn="@string/text_padding_in_dp"
+                    android:textOff="@string/text_padding_in_px"
+                    android:layout_height="wrap_content"/>
 
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/adjustLayout"
-        android:layout_marginStart="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:text="@string/adjust"
-            android:textSize="@dimen/item_header_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="@string/left"
-            android:onClick="onLeft"
-            android:layout_marginStart="10dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="@string/right"
-            android:onClick="onRight"
-            android:layout_marginStart="10dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="@string/top"
-            android:onClick="onTop"
-            android:layout_marginStart="10dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="@string/bottom"
-            android:onClick="onBottom"
-            android:layout_marginStart="10dp"
-            android:layout_width="40dp"
-            android:layout_height="40dp"/>
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="@dimen/item_space"
+                android:id="@+id/textPaddingLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="@dimen/item_header_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_padding"  />
+
+                <SeekBar
+                    style="@style/Slider"
+                    android:id="@+id/seekBarTxtPadding"
+                    android:max="50"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="16sp"
+                    android:id="@+id/txtPadding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="@dimen/item_space"
+                android:id="@+id/offsetXLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/offsetYLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="@dimen/item_header_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/offsetx"  />
+
+                <SeekBar
+                    style="@style/Slider"
+                    android:id="@+id/seekBarOffsetX"
+                    android:max="50"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="16sp"
+                    android:id="@+id/offsetX"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="@dimen/item_space"
+                android:id="@+id/offsetYLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/adjustLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="@dimen/item_header_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/offset_y"  />
+
+                <SeekBar
+                    style="@style/Slider"
+                    android:id="@+id/seekBarOffsetY"
+                    android:max="50"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:textSize="16sp"
+                    android:id="@+id/offsetY"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/adjustLayout"
+                android:layout_marginStart="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="@string/adjust"
+                    android:textSize="@dimen/item_header_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:text="@string/left"
+                    android:onClick="onLeft"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:text="@string/right"
+                    android:onClick="onRight"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:text="@string/top"
+                    android:onClick="onTop"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+                <com.google.android.material.button.MaterialButton
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:text="@string/bottom"
+                    android:onClick="onBottom"
+                    android:layout_marginStart="10dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

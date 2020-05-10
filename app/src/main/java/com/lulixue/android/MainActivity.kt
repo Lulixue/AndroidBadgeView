@@ -9,10 +9,8 @@ import android.view.animation.AlphaAnimation
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import androidx.appcompat.app.AppCompatActivity
-import com.example.androidcanvasdemo.R
 import com.lulixue.android.BadgeView.BadgeView
 import kotlinx.android.synthetic.main.activity_main.*
-
 
 class MainActivity : AppCompatActivity() {
     private var mBadges = ArrayList<BadgeView>()
@@ -24,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         animation.isChecked = true
+        editText2.clearFocus()
         mBadges.add(BadgeView.build(this).bind(button))
         mBadges.add(BadgeView.build(this).bind(mButton))
         mBadges.add(BadgeView.build(this).bind(mTxtButton))
@@ -106,24 +105,24 @@ class MainActivity : AppCompatActivity() {
 
         })
 
-        var offset = 0
-        var min = 0
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            min = 0
+            mSizeMin = 0
+            mOffsetXY = 0
             seekBarTxtSize.min = 5
             seekBarOffsetX.min = -50
             seekBarOffsetY.min = -50
         } else {
-            offset = 50
-            min = 5
+            seekBarTxtSize.max = 45
+            seekBarOffsetX.max = 100
+            seekBarOffsetY.max = 100
+            mOffsetXY = 50
+            mSizeMin = 5
         }
-        seekBarTxtSize.progress = BadgeView.DEFAULT_TEXT_SIZE_SP - min
-        seekBarOffsetX.progress = BadgeView.DEFAULT_OFFSET_X_PX + offset
-        seekBarOffsetY.progress = BadgeView.DEFAULT_OFFSET_Y_PX + offset
+        seekBarTxtSize.progress = BadgeView.DEFAULT_TEXT_SIZE_SP - mSizeMin
+        seekBarOffsetX.progress = BadgeView.DEFAULT_OFFSET_X_PX + mOffsetXY
+        seekBarOffsetY.progress = BadgeView.DEFAULT_OFFSET_Y_PX + mOffsetXY
         seekBarTxtPadding.progress = BadgeView.DEFAULT_TEXT_PADDING
 
-        mSizeMin = min
-        mOffsetXY = offset
     }
 
     private fun setTextPadding(progress: Int) {
@@ -145,7 +144,9 @@ class MainActivity : AppCompatActivity() {
     fun getOffset(progress: Int) : Int {
         return progress - mOffsetXY
     }
-
+    fun getOffsetOtherwise(progress: Int) : Int {
+        return progress + mOffsetXY
+    }
     fun onClickST(view: View) {
         for (badge in mBadges) {
             badge.setGravity(BadgeView.BadgeGravity.StartTop)
@@ -227,7 +228,7 @@ class MainActivity : AppCompatActivity() {
             badge.addOffsetX(-1)
             offset = badge.offsetX
         }
-        seekBarOffsetX.progress = getOffset(offset)
+        seekBarOffsetX.progress = getOffsetOtherwise(offset)
     }
     fun onRight(view: View) {
         var offset = 0
@@ -235,7 +236,7 @@ class MainActivity : AppCompatActivity() {
             badge.addOffsetX(1)
             offset = badge.offsetX
         }
-        seekBarOffsetX.progress = getOffset(offset)
+        seekBarOffsetX.progress = getOffsetOtherwise(offset)
     }
     fun onTop(view: View) {
         var offset = 0
@@ -243,7 +244,7 @@ class MainActivity : AppCompatActivity() {
             badge.addOffsetY(1)
             offset = badge.offsetY
         }
-        seekBarOffsetY.progress = getOffset(offset)
+        seekBarOffsetY.progress = getOffsetOtherwise(offset)
     }
     fun onBottom(view: View) {
         var offset = 0
@@ -251,7 +252,7 @@ class MainActivity : AppCompatActivity() {
             badge.addOffsetY(-1)
             offset = badge.offsetY
         }
-        seekBarOffsetY.progress = getOffset(offset)
+        seekBarOffsetY.progress = getOffsetOtherwise(offset)
     }
 
     fun onNumberAdd(view: View) {

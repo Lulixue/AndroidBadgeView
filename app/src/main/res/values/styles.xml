@@ -8,5 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
+    <!-- Base application theme. -->
+    <style name="Slider" parent="Widget.AppCompat.SeekBar">
+        <item name="android:thumbTint">@color/colorPrimaryDark</item>
+
+    </style>
 
 </resources>

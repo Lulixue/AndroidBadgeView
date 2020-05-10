@@ -261,6 +261,9 @@ public class BadgeView extends View {
         invalidate();
         return this;
     }
+    public int getTextColor() {
+        return mTextColor;
+    }
     public BadgeView setTextSizeSp(float size) {
         mTextSize = size;
         mTextPaint.setTextSize(getTextSizeInSp(size));

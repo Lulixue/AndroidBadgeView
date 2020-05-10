@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     private var mBadges = ArrayList<BadgeView>()
     private var mSizeMin = 0
     private var mOffsetXY = 0
-    private val TAG = MainActivity::class.simpleName
+    private val tag = MainActivity::class.simpleName
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         button3.setOnClickListener {
             val txt = editText2.text.toString()
 
-            Log.d(TAG, "thread: " + Thread.currentThread().toString())
+            Log.d(tag, "thread: " + Thread.currentThread().toString())
             for (badge in mBadges) {
                 badge.setBadgeText(txt)
             }
@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val offset = getOffset(progress)
                 for (b in mBadges) {
-                    b.setOffsetX(offset)
+                    b.offsetX = offset
                 }
                 offsetX.text = "" + offset + "px"
             }
@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 val offset = getOffset(progress)
                     for (b in mBadges) {
-                        b.setOffsetY(offset)
+                        b.offsetY = offset
                     }
                     offsetY.text = "" + offset + "px"
             }
